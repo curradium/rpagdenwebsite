@@ -1,0 +1,9 @@
+- wanted to work with pipenv, but lacklustre support in KDevelop
+    - went through KDE contribution process setup, had to install a newer version of wayland-protocols on Kubuntu 18.04 LTS (needed 1.15, had 1.13, used 1.18) to build kwayland, dependency of kdevelop
+    - kdevelop also depends networkmanager-qt, for which I had to remove libnm0 in order to install libnm-dev... but I could then install libnm0 and things that depended on it back (?????)
+- during developing pipenv support for KDevelop, made a project template congruent with Hitchhiker's Guide to Python suggestion
+- decided on Pyramids, Lighttpd, Pony, and {VPS-service}
+    - wanted a mature web framework that wasn't as full-stack as Django, so I could make my own decisions on what to use, but wasn't as much of a microframework as Flask, which makes no decisions for you whatsoever; I don't want to make ALL the decisions/provide all the functionality myself, I just want the web app to just work and I can plug in the important bits (DB Connector, ORM) myself
+    - Pony is very Pythonic, particularly by being able to SQL queries via list expression; peewee would be a second choice, as it's very similar, if less elegant (SQLAlchemy, while popular, seems to have a big learning curve, monolithic/unattractive design)
+    - lighttpd is lightweight, don't care for all the features of something like Apache
+- using Postfix and Dovecot for mail server
