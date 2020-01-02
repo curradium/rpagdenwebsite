@@ -1,0 +1,19 @@
+{
+  "name": "rpagdenweb",
+  "version": "0.1.0",
+  "description": "JS package for 'rpagdenweb' app",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/curradium/rpagdenweb.git"
+  },
+  "author": "Irradium",
+  "license": "GPL-3.0-or-later",
+  "bugs": {
+    "url": "https://github.com/curradium/rpagdenweb/issues"
+  },
+  "homepage": "https://github.com/curradium/rpagdenweb#readme"
+}
