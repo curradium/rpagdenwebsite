@@ -15,5 +15,8 @@
   "bugs": {
     "url": "https://github.com/curradium/rpagdenweb/issues"
   },
-  "homepage": "https://github.com/curradium/rpagdenweb#readme"
+  "homepage": "https://github.com/curradium/rpagdenweb#readme",
+  "dependencies": {
+    "coffeescript": "^2.5.0"
+  }
 }
