@@ -105,3 +105,6 @@ venv.bak/
 
 # IDE project files
 *.kdev4
+
+# Node extras
+node_modules/
