@@ -100,3 +100,11 @@ overall, neither way of managing uwsgi seems to be much different from the other
 
 all of this is to say option 2 is the clear winner; I will work on setting it up again later, I'm done for now
 >>>
+
+
+
+2020-01-06
+
+- set up uwsgi as described yesterday; works just fine
+    - have yet to set up a config with lighttpd, or with pyramid, but it's working with a sample app
+    - set up with pyramid; using PasteDeploy development.ini and --paste-logged option
