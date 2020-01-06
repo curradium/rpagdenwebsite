@@ -1,3 +1,5 @@
+October 2019
+
 - wanted to work with pipenv, but lacklustre support in KDevelop
     - went through KDE contribution process setup, had to install a newer version of wayland-protocols on Kubuntu 18.04 LTS (needed 1.15, had 1.13, used 1.18) to build kwayland, dependency of kdevelop
     - kdevelop also depends networkmanager-qt, for which I had to remove libnm0 in order to install libnm-dev... but I could then install libnm0 and things that depended on it back (?????)
@@ -7,3 +9,94 @@
     - Pony is very Pythonic, particularly by being able to SQL queries via list expression; peewee would be a second choice, as it's very similar, if less elegant (SQLAlchemy, while popular, seems to have a big learning curve, monolithic/unattractive design)
     - lighttpd is lightweight, don't care for all the features of something like Apache
 - using Postfix and Dovecot for mail server
+- will use Gitea for self-hosted Git server
+
+
+
+2020-01-03
+
+- poetry is much better overall than pipenv, although missing some features of a setup.py (pip install -e ".[testing]")
+- now using Arch Linux
+    - some issues with setup
+        - had to make a 20-nvidia.conf file to sort out issues with Optimus (w/ BusIDs)
+    - then had to do a non-standard setup, specify GRUB_TERMINAL_OUTPUT as gfxterm to get proper resolution and graphics with Plymouth, etc
+        - had to load nvidia modules early, nothing too out of the ordinary though
+    - encrypted root means fonts and themes in default location (/usr/share/grub) can't be read, raises errors; just copied it across to unencrypted /boot
+    - might switch from ext4 to btrfs + use LVM snapshots when things are more stable
+    - ought to set up swap file later
+- new project ideas
+    - fediversed identification + allow easy deploy of any federalised app
+    - fediversed blog
+    - fediversed social media
+- developed pyenv Debian package, found difficulty getting acknowledgement on Debian Mentors mailing list
+    - left on GitHub for now, will look for sponsorship again later
+    - lots of different build chains to choose from; debuild at the start, then pdebuild, cowbuilder for chroot installs, then git buildpackage for development of Debian packages in Git... think there's a new one in development, but is certainly in development...
+        - quilt alongside debuild/pdebuild/cowbuilder is very complicated to learn (i.e. adding non-existent files before creating them???), glad git buildpackage exists
+    - git buildpackage has a somewhat complicated workflow, but overall nicer than anything else
+    - Policy needs to be read
+    - lots of difficulty getting to grips with upstream's build tools
+        - used CMake as a wrapper around upstream's testing Makefile (which needed a chroot to work with because it didn't clean up after itself); had to specify an override in debian/rules
+            - CMake is amazing compared to Make/autoconf
+- don't care to do KDevelop development, not experienced enough/familiar enough with KDevelop to efficiently work on it
+    - suitable for Python development if not using Python integrations (no Konsole support with Python integrations, which is really useful in place of proper Python/Poetry integrations)
+- godot-python is the next thing to contribute to, but will do that alongside either a game or web project
+- godot-python has easy instructions (make static bindings), next step for web is to get uwsgi and lighttpd set up (then branch onto local gitea + postfix/dovecot?)
+
+
+
+2020-01-03 (cont.)
+
+- manual invocation of coffeescript kinda sucks ass (and no inline coffeescript is supported), so looked into web asset management
+    - webassets package; has pyramid (and jinja2?) integration
+
+
+
+2020-01-04 
+
+- looked into Lets Encrypt; probably best to set up a VPS on rpagden.com with a basic application to get the cert, then start it up again on HTTPS. needs shell access, open port to the Internet
+
+<<<
+uwsgi can run solo, or as an emperor with vassals
+emperor mode is run under systemd; start on startup
+uwsgi and lighttpd run separately; makes things easier
+uwsgi can run from pastedeploy inis - i.e. production and development.ini - but maybe not necessary? not sure what they give me
+alternative to pastedeploy is to run as a normal app, but having issues finding the name of the WSGI callable to give to the uwsgi config
+want to run pyramid app through systemd, but uwsgi is isolated in virtualenv... makes things difficult
+ideally, go pyenv -> poetry -> uwsgi in systemd
+don't want to dedicate a particular project's uwsgi instance to be the emperor; probably default to installing an instance to particular python version
+maybe system uwsgi install wouldn't be too bad - operates on the same level as systemd, after all - but it feels like I should 'containerise' it somehow
+>>>
+
+
+
+2020-01-05
+
+- noticed that uWSGI is in itself a webserver, maybe it's not worth putting it behind lighttpd...? will have to look into the reverse proxying it can do/generally see if it can cache, serve static files well, be able to link to Gitea... (reverse proxying)
+
+<<<
+looked further into uWSGI stuff, mostly about emperor/vassal mode
+seems to be two main setups:
+1) download uwsgi source code (root emperor to install or [ln] to /usr/local), and build it + plugins for each version of Python to use
+    - pros; very much the canonical way to use uwsgi, probably more performant too
+    - cons; extra steps in build environment to build the plugins; have to manually set up the emperor and vassals
+2) have a root emperor, then make vassals of each uwsgi binary in each project virtualenv using binary patch options in the emperor inis
+    - pros; easier setup, no need to manually compile uwsgi
+    - cons; might not be as performant
+    - caveats; not sure how to install this root emperor; either in pip in system Python or as an archlinux package
+        - think installing to system as opposed to system Python would be better as pip comes with unnecessary python module, but it feels wrong not installing it via pip...
+        - resolved; arch linux package is just better in every way (comes with some pre-configuration), will probably be plenty up to date, even compared to pip
+    
+in practice:
+
+1) simple enough to do, even though it is a pain, it's a one-time install
+   Python versions >3.4 need be built with [export CFLAGS="$CFLAGS -fPIC"] done previously, and then [env PYTHON_CONFIGURE_OPTS="--enable-shared"]
+   again, one-time config, it's just even more of a pain to set up and custom compile Python with these opts
+
+2) works quite well, just do a config as normal, but pass the unprivileged-binary-patch option to the virtualenv's uwsgi
+   vassal uwsgi has the necessary python plugin statically linked to it, emperor doesn't; this is a good thing anyway
+   doesn't seem to work (and would take up 100% of a CPU) if using privileged-binary-patch... I don't understand why...
+   
+overall, neither way of managing uwsgi seems to be much different from the other. looking at memory usage, it seems the emperor uses less RAM than any of its workers, and both instances of emperors spawn 3 instances of uwsgi; assumedly, they then have the same amount of performance (roughly). I had assumed the emperor would serve the uwsgi apps in its own shared memspace, but that seems to be wrong... and frankly, it makes sense why
+
+all of this is to say option 2 is the clear winner; I will work on setting it up again later, I'm done for now
+>>>

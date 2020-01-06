@@ -7,6 +7,10 @@ authors = ["Irradium"]
 [tool.poetry.dependencies]
 python = "^3.6"
 pyramid = "^1.10.4"
+pyramid_webassets = "^0.10"
+pyramid_jinja2 = "^2.8"
+uwsgi = "^2.0.18"
+webassets = "^2.0"
 
 [tool.poetry.dev-dependencies]
 
