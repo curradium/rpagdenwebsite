@@ -21,8 +21,9 @@ October 2019
         - had to make a 20-nvidia.conf file to sort out issues with Optimus (w/ BusIDs)
     - then had to do a non-standard setup, specify GRUB_TERMINAL_OUTPUT as gfxterm to get proper resolution and graphics with Plymouth, etc
         - had to load nvidia modules early, nothing too out of the ordinary though
+        - videoinfo on Arch GRUB didn't work, had to boot a live Kubuntu USB instead to get display modes
     - encrypted root means fonts and themes in default location (/usr/share/grub) can't be read, raises errors; just copied it across to unencrypted /boot
-    - might switch from ext4 to btrfs + use LVM snapshots when things are more stable
+    - might switch from ext4 to btrfs and/or use LVM snapshots when things are more stable
     - ought to set up swap file later
 - new project ideas
     - fediversed identification + allow easy deploy of any federalised app
@@ -92,7 +93,7 @@ in practice:
    Python versions >3.4 need be built with [export CFLAGS="$CFLAGS -fPIC"] done previously, and then [env PYTHON_CONFIGURE_OPTS="--enable-shared"]
    again, one-time config, it's just even more of a pain to set up and custom compile Python with these opts
 
-2) works quite well, just do a config as normal, but pass the unprivileged-binary-patch option to the virtualenv's uwsgi
+2) works quite well, just do a config as normal, but pass the unprivileged-binary-patch option to the virtualenv's uwsgi (privileged-binary-patch just fuckin kills uWSGI)
    vassal uwsgi has the necessary python plugin statically linked to it, emperor doesn't; this is a good thing anyway
    doesn't seem to work (and would take up 100% of a CPU) if using privileged-binary-patch... I don't understand why...
    
@@ -107,4 +108,23 @@ all of this is to say option 2 is the clear winner; I will work on setting it up
 
 - set up uwsgi as described yesterday; works just fine
     - have yet to set up a config with lighttpd, or with pyramid, but it's working with a sample app
-    - set up with pyramid; using PasteDeploy development.ini and --paste-logged option
+    - set up with pyramid; using PasteDeploy development.ini and --paste option (seems to be THE way to load pyramid apps)
+- lighttpd works with production.ini, not development.ini (?), but even then, no css (and js?) loads
+    - configured uwsgi with 'uwsgi-socket' instead of 'http'; not sure how to configure uwsgi/pyramid/lighttpd to make things work...
+    - for the future, think it should be easy to run multiple apps under the same lighttpd instance; just add another uwsgi/scgi config
+        - to that end, think uwsgi isn't able to do this; seems only able to run apps on a particular port
+- FUTURE
+    - final piece in the stack is to configure lighttpd enough to serve the one Pyramid app properly
+    - then I can move onto using webassets to work with coffeescript
+        - ideally having inline CS which auto compiles to JS would be amazing, but auto-compilation of script files will be fine...
+    - then... finally, I can either work on the web app, or work on running gitea under lighttpd (or uwsgi as a webserver?), or any other app
+        - if there's no federalised blogging platform, develop it and run it myself
+    - need to work out how to package a federalised webapp (and, a common protocol to deploy them under...?)
+    
+
+    
+2020-01-14
+
+- fixed the Pyramid -> uWSGI -> lighttpd issues
+    - needed to just add one option to lighttpd.conf
+        - ``` fix-root-scriptname => "enable" ```
