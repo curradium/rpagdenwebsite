@@ -11,6 +11,10 @@ pyramid_webassets = "^0.10"
 pyramid_jinja2 = "^2.8"
 uwsgi = "^2.0.18"
 webassets = "^2.0"
+psycopg2 = "^2.8.4"
+pony = "^0.7.11"
+pylint = "^2.4.4"
+black = "^19.10b0"
 
 [tool.poetry.dev-dependencies]
 

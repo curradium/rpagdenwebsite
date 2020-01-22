@@ -128,3 +128,10 @@ all of this is to say option 2 is the clear winner; I will work on setting it up
 - fixed the Pyramid -> uWSGI -> lighttpd issues
     - needed to just add one option to lighttpd.conf
         - ``` fix-root-scriptname => "enable" ```
+        
+        
+        
+2020-01-21
+
+- using just uWSGI in virtualenv for dev mode
+   - have to remember that dev mode tests go to localhost:6543, prod mode tests go to localhost(:80)
