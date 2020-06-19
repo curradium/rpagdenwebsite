@@ -144,3 +144,7 @@ all of this is to say option 2 is the clear winner; I will work on setting it up
     - didn't work so well, either had a 503 error or 404
     - tried specifying it as another ["HTTP"]... line and "/foo" => ((... line, neither worked
         - probably should work, just not sure what the deal is with it...
+        
+
+        
+2020-02-01
