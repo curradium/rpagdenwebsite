@@ -1,3 +1,3 @@
 [run]
-source = rpagdenweb
-omit = rpagdenweb/test*
+source = rjasweetweb
+omit = rjasweetweb/test*

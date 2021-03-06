@@ -1,4 +1,4 @@
-rpagdenweb
+rjasweetweb
 ==========
 
 Getting Started
@@ -6,7 +6,7 @@ Getting Started
 
 - Change directory into your newly created project.
 
-    cd rpagdenweb
+    cd rjasweetweb
 
 - Create a Python virtual environment.
 

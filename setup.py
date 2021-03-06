@@ -23,9 +23,9 @@ tests_require = [
 ]
 
 setup(
-    name='rpagdenweb',
+    name='rjasweetweb',
     version='0.0',
-    description='rpagdenweb',
+    description='rjasweetweb',
     long_description=README + '\n\n' + CHANGES,
     classifiers=[
         'Programming Language :: Python',
@@ -46,7 +46,7 @@ setup(
     install_requires=requires,
     entry_points={
         'paste.app_factory': [
-            'main = rpagdenweb:main',
+            'main = rjasweetweb:main',
         ],
     },
 )

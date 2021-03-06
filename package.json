@@ -1,21 +1,21 @@
 {
-  "name": "rpagdenweb",
+  "name": "rjasweetweb",
   "version": "0.1.0",
-  "description": "JS package for 'rpagdenweb' app",
+  "description": "JS package for 'rjasweetweb' app",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/curradium/rpagdenweb.git"
+    "url": "git+https://github.com/rosieeyes/rjasweetweb.git"
   },
-  "author": "Irradium",
+  "author": "Rosie Sweet",
   "license": "GPL-3.0-or-later",
   "bugs": {
-    "url": "https://github.com/curradium/rpagdenweb/issues"
+    "url": "https://github.com/rosieeyes/rjasweetweb/issues"
   },
-  "homepage": "https://github.com/curradium/rpagdenweb#readme",
+  "homepage": "https://github.com/rosieeyes/rjasweetweb#readme",
   "dependencies": {},
   "devDependencies": {
     "@babel/core": "^7.7.7",
